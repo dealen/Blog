@@ -22,7 +22,11 @@ namespace Blog.API.Controllers
             return Json(result);
         }
 
-
-        
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var result = await _userservice.BrowseAsync();
+            return Json(result);
+        }        
     }
 }

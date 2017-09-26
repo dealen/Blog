@@ -30,7 +30,8 @@ namespace Blog.Infrastructure.Repositories
 
         public async Task AddAsync(User user)
         {
-            throw new NotImplementedException();
+            _users.Add(user);
+            await Task.CompletedTask;
         }
 
         public async Task RemoveAsync(Guid id)

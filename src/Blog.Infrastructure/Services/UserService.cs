@@ -21,10 +21,8 @@ namespace Blog.Infrastructure.Services
 
         public async Task<IEnumerable<UserDto>> BrowseAsync()
         {
-            var users = _userRepository.GetAllAsync();
-
-            //return _mapper.Map<UserDto>(users);
-            throw new NotImplementedException();
+            var users = await _userRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<UserDto>>(users);            
         }
 
         public async Task<UserDto> GetAsync(string email)
@@ -53,7 +51,7 @@ namespace Blog.Infrastructure.Services
                 throw new Exception($"User with prowided email: {email} already exist.");
             
             var salt = Guid.NewGuid().ToString("N");
-            //user = new User(userId, email, username, password, salt);
+            user = new User(userId, email, username, role, password, salt);
         }
     }
 }
