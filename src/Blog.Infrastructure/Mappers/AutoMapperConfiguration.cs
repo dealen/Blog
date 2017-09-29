@@ -1,5 +1,6 @@
 using AutoMapper;
 using Blog.Core.Domain;
+using Blog.Infrastructure.Commands;
 using Blog.Infrastructure.DTO;
 
 namespace Blog.Infrastructure.Mappers
