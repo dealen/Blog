@@ -1,16 +1,17 @@
 using System.Threading.Tasks;
+using Blog.Infrastructure.Commands;
+using Blog.Infrastructure.Commands.Users;
 using Blog.Infrastructure.DTO;
 using Blog.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers
 {
-    [Route("[controller]")]
-    public class UsersController : Controller
+    public class UsersController : ApiControllerBase
     {
         private readonly IUserService _userservice;
 
-        public UsersController(IUserService userService)
+        protected UsersController(IUserService userService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
             _userservice = userService;
         }
@@ -28,5 +29,13 @@ namespace Blog.API.Controllers
             var result = await _userservice.BrowseAsync();
             return Json(result);
         }        
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]CreateUser command)
+        {
+            await _commandDispatcher.DispatchAsync(command);
+
+            return Created($"users/{command.Email}", new object());
+        }
     }
 }
