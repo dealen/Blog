@@ -11,7 +11,7 @@ namespace Blog.API.Controllers
     {
         private readonly IUserService _userservice;
 
-        protected UsersController(IUserService userService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
             _userservice = userService;
         }
