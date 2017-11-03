@@ -44,14 +44,15 @@ namespace Blog.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task RegisterAsync(Guid userId, string email, string username, string password, string role)
+        public async Task RegisterAsync(string email, string username, string password, string role)
         {
             var user = await _userRepository.GetAsync(email);
             if (user != null)
                 throw new Exception($"User with prowided email: {email} already exist.");
             
             var salt = Guid.NewGuid().ToString("N");
-            user = new User(userId, email, username, role, password, salt);
+            user = new User(Guid.NewGuid(), email, username, role, password, salt);
+            await _userRepository.AddAsync(user);
         }
     }
 }
