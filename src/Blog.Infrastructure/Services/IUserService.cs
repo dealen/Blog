@@ -10,7 +10,7 @@ namespace Blog.Infrastructure.Services
         Task<UserDto> GetAsync(string email);
         Task<UserDto> GetAsync(Guid id);
         Task<IEnumerable<UserDto>> BrowseAsync();
-        Task RegisterAsync(Guid userId, string email, string username, string password, string role);
+        Task RegisterAsync(string email, string username, string password, string role);
         Task LoginAsync(string email, string password);
     }
 }
