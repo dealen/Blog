@@ -55,4 +55,4 @@ namespace Blog.Infrastructure.Services
             await _userRepository.AddAsync(user);
         }
     }
-}
+ }
