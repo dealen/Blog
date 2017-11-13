@@ -16,6 +16,7 @@ using Blog.Infrastructure.Mappers;
 using Blog.Infrastructure.Repositories;
 using Blog.Infrastructure.Services;
 using Blog.Infrastructure.IoC.Modules;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Blog.API
 {
@@ -37,6 +38,20 @@ namespace Blog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "blog.jakubm.pl",
+                    ValidAudience = "blog.jakubm.pl",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
+                };
+            });
+
             // dodawanie powiązań klas i interfejsow do kontenera IoC
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
